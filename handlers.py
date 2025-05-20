@@ -14,7 +14,7 @@ nlp_service = NLPService()
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
-        "Welcome! Use /ai_news to fetch, classify, and summarize Hacker News stories."
+        "Welcome! Use /ai_news to fetch Hacker News stories."
     )
 
 
