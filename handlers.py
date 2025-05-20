@@ -47,8 +47,10 @@ async def ai_news(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                 "Statistics",
                 "AI Agents & Tools",
             ]:
-                print(title, summary, category)
+                # print(title, summary, category)
                 continue
+
+            print(title, summary, category)
 
             summary = await nlp_service.summarize_article(url)
             msg = f"*[{category}]* {title}\n{url}\n{summary}"

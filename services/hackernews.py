@@ -33,7 +33,6 @@ class HackerNewsService:
         item_ids: list[int], max_concurrent: int = 5
     ) -> list[dict]:
         semaphore = asyncio.Semaphore(max_concurrent)
-        results = []
 
         async def fetch_with_semaphore(item_id):
             async with semaphore:
