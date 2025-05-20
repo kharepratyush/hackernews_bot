@@ -30,7 +30,7 @@ class HackerNewsService:
 
     @staticmethod
     async def fetch_items_parallel(
-        item_ids: list[int], max_concurrent: int = 5
+        item_ids: list[int], max_concurrent: int = 1
     ) -> list[dict]:
         semaphore = asyncio.Semaphore(max_concurrent)
 

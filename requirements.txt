@@ -8,3 +8,6 @@ PyPDF2
 langchain_community
 langchain-ollama
 python-telegram-bot
+transformers[torch]
+huggingface_hub[hf_xet]
+accelerate

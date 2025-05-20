@@ -1,11 +1,9 @@
 import asyncio
 import io
-import pprint
 import re
 from typing import Literal
 
 import aiohttp
-import requests
 from bs4 import BeautifulSoup
 from langchain.schema import AIMessage, HumanMessage
 from langchain_ollama import ChatOllama

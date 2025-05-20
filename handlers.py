@@ -1,4 +1,5 @@
 import logging
+import time
 
 from telegram import Update
 from telegram.ext import ContextTypes
@@ -27,6 +28,7 @@ async def ai_news(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     items = hn_service.fetch_items_parallel(stories, max_concurrent=5)
     async for story in items:
         try:
+            time.sleep(5)
             # print(f"{story.get('title', 'No Title')} ({story.get('url', 'No URL')})")
             title = story.get("title")
             url = story.get("url")
@@ -46,6 +48,7 @@ async def ai_news(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                 "Data Science",
                 "Statistics",
                 "AI Agents & Tools",
+                "Embeddings"
             ]:
                 # print(title, summary, category)
                 continue
