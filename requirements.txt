@@ -1,0 +1,10 @@
+aiohttp
+pydantic
+requests
+pydantic-settings
+BeautifulSoup4
+langchain
+PyPDF2
+langchain_community
+langchain-ollama
+python-telegram-bot
