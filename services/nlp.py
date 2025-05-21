@@ -99,6 +99,7 @@ class NLPService:
             f"\n\nDetails: {text}"
         )
 
+        await asyncio.sleep(5)
         msg = HumanMessage(content=prompt)
         resp: AIMessage = await self.client.with_structured_output(
             DocumentClassModel
@@ -139,6 +140,7 @@ class NLPService:
                 text = await self._extract_text_html(url, verify_ssl=verify_ssl)
 
             snippet = text[:3000]
+            await asyncio.sleep(5)
             prompt = f"Summarize the following in three sentences:\n\n{snippet}"
             msg = HumanMessage(content=prompt)
             resp: AIMessage = await self.client.ainvoke([msg])

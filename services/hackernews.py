@@ -4,7 +4,7 @@ import aiohttp
 
 from config import settings
 
-TOP_STORIES_URL = "https://hacker-news.firebaseio.com/v0/topstories.json"
+TOP_STORIES_URL = "https://hacker-news.firebaseio.com/v0/beststories.json"
 ITEM_URL = "https://hacker-news.firebaseio.com/v0/item/{id}.json"
 
 
@@ -23,14 +23,22 @@ class HackerNewsService:
     @staticmethod
     async def fetch_item(item_id: int) -> dict:
         url = ITEM_URL.format(id=item_id)
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url, params={"print": "pretty"}, timeout=5) as resp:
-                resp.raise_for_status()
-                return await resp.json()
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url, params={"print": "pretty"}, timeout=5) as resp:
+                    resp.raise_for_status()
+                    return await resp.json()
+        except aiohttp.ClientError as e:
+            # Log or handle the exception as needed
+            return {"error": f"Client error: {e}", "id": item_id}
+        except asyncio.TimeoutError:
+            return {"error": "Request timed out", "id": item_id}
+        except Exception as e:
+            return {"error": f"Unexpected error: {e}", "id": item_id}
 
     @staticmethod
     async def fetch_items_parallel(
-        item_ids: list[int], max_concurrent: int = 1
+        item_ids: list[int], max_concurrent: int = 5
     ) -> list[dict]:
         semaphore = asyncio.Semaphore(max_concurrent)
 
@@ -39,7 +47,9 @@ class HackerNewsService:
                 return await HackerNewsService.fetch_item(item_id)
 
         tasks = [fetch_with_semaphore(item_id) for item_id in item_ids]
+
         for coro in asyncio.as_completed(tasks):
+            await asyncio.sleep(0.5)  # Rate limit: 1 request per second
             result = await coro
             yield result
 
