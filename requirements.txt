@@ -11,3 +11,4 @@ python-telegram-bot
 transformers[torch]
 huggingface_hub[hf_xet]
 accelerate
+aiosqlite
