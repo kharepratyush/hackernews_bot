@@ -39,18 +39,7 @@ async def ai_news(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             category = await nlp_service.classify_topic(
                 (title + "\n" + summary).strip()
             )
-            if category not in [
-                "Machine Learning",
-                "Artificial Intelligence",
-                "Deep Learning",
-                "Reinforcement Learning",
-                "Natural Language Processing",
-                "Computer Vision",
-                "Data Science",
-                "Statistics",
-                "AI Agents & Tools",
-                "Embeddings"
-            ]:
+            if category != 'Yes':
                 # print(title, summary, category)
                 continue
 
