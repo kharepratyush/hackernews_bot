@@ -36,16 +36,16 @@ class NLPService:
             )
 
         prompt = (
-            "Does this belong to Machine Learning, Artificial Intelligence, Statistics or Deep Learning?"
+            "What is the category of the following section?"
+            "Example: Word2Vec belongs to Embedding Category."
+            "Only return name as in 'embedding' for category"
             f"\n\nDetails: {text}"
         )
 
-        await asyncio.sleep(5)
+        await asyncio.sleep(1)
         msg = HumanMessage(content=prompt)
-        resp: AIMessage = await self.client.with_structured_output(
-            DocumentClassModel
-        ).ainvoke([msg])
-        return resp.text_class.strip()
+        resp: AIMessage = await self.client.ainvoke([msg])
+        return self._clean_text(resp.content).lower().strip()
 
     async def _extract_text_html(self, url: str, verify_ssl: bool = True) -> str:
         connector = aiohttp.TCPConnector(ssl=verify_ssl)
@@ -80,8 +80,8 @@ class NLPService:
             else:
                 text = await self._extract_text_html(url, verify_ssl=verify_ssl)
 
-            snippet = text[:3000]
-            await asyncio.sleep(5)
+            snippet = text[:5000]
+            await asyncio.sleep(1)
             prompt = f"Summarize the following in three sentences:\n\n{snippet}"
             msg = HumanMessage(content=prompt)
             resp: AIMessage = await self.client.ainvoke([msg])

@@ -39,9 +39,9 @@ async def ai_news(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             category = await nlp_service.classify_topic(
                 (title + "\n" + summary).strip()
             )
-            if category != 'Yes':
-                # print(title, summary, category)
-                continue
+            # if category != 'Yes':
+            #     # print(title, summary, category)
+            #     continue
 
             print(title, summary, category)
 
