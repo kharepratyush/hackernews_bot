@@ -80,7 +80,7 @@ class NLPService:
             else:
                 text = await self._extract_text_html(url, verify_ssl=verify_ssl)
 
-            snippet = text[:5000]
+            snippet = text[:3000].strip()
             await asyncio.sleep(1)
             prompt = f"Summarize the following in three sentences:\n\n{snippet}"
             msg = HumanMessage(content=prompt)
