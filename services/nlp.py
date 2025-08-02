@@ -17,7 +17,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 class NLPService:
     def __init__(self):
         self.client = ChatGoogleGenerativeAI(
-            model="gemini-1.5-flash",  # Or another Gemini model
+            model="gemini-2.5-flash",  # Or another Gemini model
             temperature=0,
             max_output_tokens=1024,
             google_api_key=settings.GOOGLE_API_KEY,  # Add this to your config
