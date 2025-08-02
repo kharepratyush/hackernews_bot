@@ -26,11 +26,11 @@ async def ai_news(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     found = False
 
     stories = await hn_service.fetch_top_stories()
-    items = hn_service.fetch_items_parallel(stories, max_concurrent=2)
+    items = hn_service.fetch_items_parallel(stories, max_concurrent=1)
     print('Count of new stories:', len(stories))
     async for story in items:
         try:
-            await asyncio.sleep(5)
+            await asyncio.sleep(60)
             # print(f"{story.get('title', 'No Title')} ({story.get('url', 'No URL')})")
             title = story.get("title")
             url = story.get("url")

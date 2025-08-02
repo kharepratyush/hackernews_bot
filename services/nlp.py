@@ -11,18 +11,25 @@ from pydantic import BaseModel, Field
 from PyPDF2 import PdfReader
 
 from config import settings
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 
 class NLPService:
     def __init__(self):
-        self.client = ChatOllama(
-            model=settings.OLLAMA_MODEL,
-            base_url=settings.OLLAMA_URL,
+        self.client = ChatGoogleGenerativeAI(
+            model="gemini-1.5-flash",  # Or another Gemini model
             temperature=0,
-            max_tokens=None,
-            timeout=None,
-            max_retries=2,
+            max_output_tokens=1024,
+            google_api_key=settings.GOOGLE_API_KEY,  # Add this to your config
         )
+        # self.client = ChatOllama(
+        #     model=settings.OLLAMA_MODEL,
+        #     base_url=settings.OLLAMA_URL,
+        #     temperature=0,
+        #     max_tokens=None,
+        #     timeout=None,
+        #     max_retries=2,
+        # )
 
     async def classify_topic(self, text: str) -> str:
 
